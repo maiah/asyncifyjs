@@ -1,6 +1,11 @@
 # asyncify
 Make CPU intensive code asynchronous just like Node.js or Javascript IO call
 
+# Installation
+```sh
+npm install --save asyncify
+```
+
 # Usage
 ```js
 const asyncify = require('asyncify');
@@ -24,3 +29,9 @@ p2.then(function (res) {
     console.log('The result is', res);
 });
 ```
+
+License
+---
+The MIT License (MIT)
+
+Copyright (c) 2015 Maiah Macariola
