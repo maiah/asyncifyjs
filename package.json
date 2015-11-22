@@ -1,0 +1,22 @@
+{
+  "name": "asyncify",
+  "version": "1.0.0",
+  "description": "Make CPU intensive code asynchronous just like Javascript IO call",
+  "main": "index.js",
+  "scripts": {
+    "test": "node test"
+  },
+  "keywords": [
+    "concurrency",
+    "csp",
+    "thread",
+    "webworker",
+    "worker",
+    "async"
+  ],
+  "author": "Maiah Macariola",
+  "license": "MIT",
+  "dependencies": {
+    "tiny-worker": "^1.1.1"
+  }
+}
