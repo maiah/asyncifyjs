@@ -3,12 +3,12 @@ Make CPU intensive code asynchronous just like Node.js or Javascript IO call
 
 # Installation
 ```sh
-npm install --save asyncify
+npm install --save asyncifyjs
 ```
 
 # Usage
 ```js
-const asyncify = require('asyncify');
+const asyncify = require('asyncifyjs');
 
 const computeAsync = asyncify(function (num) {
     'use strict';
