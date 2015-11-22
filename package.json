@@ -1,5 +1,5 @@
 {
-  "name": "asyncify",
+  "name": "asyncifyjs",
   "version": "1.0.0",
   "description": "Make CPU intensive code asynchronous just like Javascript IO call",
   "main": "index.js",
