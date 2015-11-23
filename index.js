@@ -12,11 +12,13 @@ const workify = function (fn) {
 
             self.onmessage = function (ev) {
                 'use strict';
-                const stringFn = 'result = ' + ev.data.fn + '(' + ev.data.param + ')';
-                const ctx = { 'result': null };
+                const stringFn = 'fn = ' + ev.data.fn;
+                const ctx = { 'fn': undefined };
                 vm.createContext(ctx);
                 vm.runInContext(stringFn, ctx);
-                postMessage(ctx.result);
+
+                const result = ctx.fn(ev.data.param);
+                postMessage(result);
             };
         });
 
