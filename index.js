@@ -2,53 +2,44 @@
 
 const Worker = require('tiny-worker');
 
-const workify = function (fn) {
+module.exports = function asyncify(fn) {
     'use strict';
 
-    const work = function (param, cb) {
-        const worker = new Worker(function () {
-            'use strict';
-            const vm = require('vm');
-
-            self.onmessage = function (ev) {
+    return function asyncified(param, cb) {
+        const prmse = new Promise(function (resolve, reject) {
+            const worker = new Worker(function job() {
                 'use strict';
-                const stringFn = 'fn = ' + ev.data.fn;
-                const ctx = { 'fn': undefined };
-                vm.createContext(ctx);
-                vm.runInContext(stringFn, ctx);
+                const vm = require('vm');
 
-                const result = ctx.fn(ev.data.param);
-                postMessage(result);
-            };
-        });
+                self.onmessage = function (ev) {
+                    'use strict';
+                    const stringFn = 'fn = ' + ev.data.fn;
+                    const ctx = { 'fn': undefined };
+                    vm.createContext(ctx);
+                    vm.runInContext(stringFn, ctx);
 
-        worker.postMessage({
-            'fn': fn.toString(),
-            'param': param
-        });
-
-        worker.onmessage = function (ev) {
-            cb(ev.data);
-            worker.terminate();
-        };
-    };
-
-    return work;
-};
-
-const promisify = function (work) {
-    return function(param) {
-        const p = new Promise(function (resolve, reject) {
-            work(param, function (res) {
-                resolve(res);
+                    const result = ctx.fn(ev.data.param);
+                    postMessage(result);
+                };
             });
+
+            worker.postMessage({
+                'fn': fn.toString(),
+                'param': param
+            });
+
+            worker.onmessage = function (ev) {
+                if (cb) {
+                    cb(ev.data);
+                } else {
+                    resolve(ev.data);
+                }
+
+                worker.terminate();
+            };
+
         });
-        return p;
+
+        return prmse;
     };
 };
-
-const asyncify = function (fn) {
-    return promisify(workify(fn));
-};
-
-module.exports = asyncify;
