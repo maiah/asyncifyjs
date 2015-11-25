@@ -8,47 +8,33 @@ npm install --save asyncifyjs
 
 # Usage
 ```js
-const asyncify = require('asyncifyjs');
+const asyncify = require('./index.js');
 
-const computeAsync = asyncify(function (num) {
-    'use strict';
-    let result = 0;
-    for (let i = 0; i < num; i++) {
-        result = result + (num * 3);
-    }
-    return result;
+function fib(num) {
+    if (num === 0) return 0;
+    else if (num === 1) return 1;
+    else return fib(num - 1) + fib(num - 2);
+}
+
+const fibAsync = asyncify(fib);
+
+fibAsync(32, function (res) {
+    console.log('2. The result is', res);
 });
 
-computeAsync(4134123, function (res) {
-    console.log('The result is', res);
-});
-
-computeAsync(10, function (res) {
-    console.log('The result is', res);
-});
+fibAsync(15, function (res) {
+    console.log('2. The result is', res);
+});const asyncify = require('asyncifyjs');
 ```
 
 Or using promises:
 
 ```js
-const asyncify = require('asyncifyjs');
-
-const computeAsync = asyncify(function (num) {
-    'use strict';
-    let result = 0;
-    for (let i = 0; i < num; i++) {
-        result = result + (num * 3);
-    }
-    return result;
-});
-
-const promise1 = computeAsync(4134123);
-promise1.then(function (res) {
+fibAsync(20).then(function (res) {
     console.log('The result is', res);
 });
 
-const promise2 = computeAsync(10);
-promise2.then(function (res) {
+fibAsync(10).then(function (res) {
     console.log('The result is', res);
 });
 ```

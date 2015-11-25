@@ -1,34 +1,28 @@
 const asyncify = require('./index.js');
 
-function compute(num) {
-    'use strict';
-    let result = 0;
-    for (let i = 0; i < num; i++) {
-        result = result + (num * 3);
-    }
-    return result;
+function fib(num) {
+    if (num === 0) return 0;
+    else if (num === 1) return 1;
+    else return fib(num - 1) + fib(num - 2);
 }
-const computeAsync = asyncify(compute);
 
-const p1 = computeAsync(4134123);
-p1.then(function (res) {
+const fibAsync = asyncify(fib);
+
+fibAsync(20).then(function (res) {
     console.log('The result is', res);
 });
 
-const p2 = computeAsync(10);
-p2.then(function (res) {
+fibAsync(10).then(function (res) {
     console.log('The result is', res);
 });
 
 
 // Using callback
 
-const computeAsync2 = asyncify(compute);
-
-computeAsync2(4134123, function (res) {
+fibAsync(32, function (res) {
     console.log('2. The result is', res);
 });
 
-computeAsync2(10, function (res) {
+fibAsync(15, function (res) {
     console.log('2. The result is', res);
 });
