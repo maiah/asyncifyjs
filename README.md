@@ -1,5 +1,5 @@
 # asyncify
-Make CPU intensive code asynchronous non-blocking just like Node.js or Javascript IO call
+Make your non-IO JavaScript code asynchronous non-blocking just like Node.js non-blocking IO. This is perfect for CPU intensive code.
 
 # Installation
 ```sh
@@ -8,7 +8,7 @@ npm install --save asyncifyjs
 
 # Usage
 ```js
-const asyncify = require('./index.js');
+const asyncify = require('asyncifyjs');
 
 function fib(num) {
     if (num === 0) return 0;
@@ -24,7 +24,7 @@ fibAsync(32, function (res) {
 
 fibAsync(15, function (res) {
     console.log('2. The result is', res);
-});const asyncify = require('asyncifyjs');
+});
 ```
 
 Or using promises:
