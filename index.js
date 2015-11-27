@@ -1,31 +1,16 @@
-'use strict';
-
-const Worker = require('tiny-worker');
+const Worker = require('webworker-threads').Worker;
 
 module.exports = function asyncify(fn) {
-    'use strict';
-
     return function asyncified(param, cb) {
         const prmse = new Promise(function (resolve, reject) {
+
             const worker = new Worker(function job() {
-                'use strict';
-                const vm = require('vm');
-
-                self.onmessage = function (ev) {
-                    'use strict';
-                    const stringFn = 'fn = ' + ev.data.fn;
-                    const ctx = { 'fn': undefined };
-                    vm.createContext(ctx);
-                    vm.runInContext(stringFn, ctx);
-
-                    const result = ctx.fn(ev.data.param);
+                this.onmessage = function (ev) {
+                    // TODO: need to find good solution to avoid this 'evil'
+                    const result = eval(ev.data.fn + '(' + ev.data.param + ')');
                     postMessage(result);
+                    self.close();
                 };
-            });
-
-            worker.postMessage({
-                'fn': fn.toString(),
-                'param': param
             });
 
             worker.onmessage = function (ev) {
@@ -34,10 +19,12 @@ module.exports = function asyncify(fn) {
                 } else {
                     resolve(ev.data);
                 }
-
-                worker.terminate();
             };
 
+            worker.postMessage({
+                'fn': fn.toString(),
+                'param': param
+            });
         });
 
         return prmse;

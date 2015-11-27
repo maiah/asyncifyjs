@@ -8,7 +8,7 @@ function fib(num) {
 
 const fibAsync = asyncify(fib);
 
-fibAsync(20).then(function (res) {
+fibAsync(25099).then(function (res) {
     console.log('The result is', res);
 });
 
@@ -19,7 +19,7 @@ fibAsync(10).then(function (res) {
 
 // Using callback
 
-fibAsync(32, function (res) {
+fibAsync(32070, function (res) {
     console.log('2. The result is', res);
 });
 

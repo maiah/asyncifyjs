@@ -8,11 +8,13 @@
   },
   "keywords": [
     "concurrency",
+    "parallel",
     "csp",
     "thread",
     "webworker",
     "worker",
-    "async"
+    "async",
+    "task"
   ],
   "author": "Maiah Macariola",
   "license": "MIT",
@@ -21,6 +23,6 @@
     "url": "https://github.com/maiah/asyncifyjs.git"
   },
   "dependencies": {
-    "tiny-worker": "^1.1.1"
+    "webworker-threads": "^0.6.2"
   }
 }
